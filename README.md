@@ -1,2 +1,2 @@
 # QUIZ
-created by owner on an AI
+created by owner not an AI
