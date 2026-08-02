@@ -15,41 +15,50 @@ body {
   text-align: center;
   width: 90%;
   max-width: 600px;
-  background: rgba(50, 184, 221, 0.1);
+  background: rgba(50, 184, 221, 0.08);
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
 }
 
-/* Buttons */
+/* Buttons: improved contrast */
 button {
   margin: 10px;
   padding: 12px 25px;
   border: none;
   border-radius: 8px;
-  background: #d4d3d2;
+  background: #333; /* darker for contrast */
   color: #fff;
   font-size: 16px;
   cursor: pointer;
-  transition: transform 0.2s, background 0.3s;
+  transition: transform 0.12s, background 0.2s;
 }
 
+/* Hover & focus */
 button:hover {
-  transform: scale(1.1);
-  background: #ffc6a8;
+  transform: scale(1.03);
+  background: #444;
+}
+button:focus {
+  outline: 3px solid #ffd966; /* visible focus for keyboard users */
+  outline-offset: 2px;
 }
 
-/* Quiz options */
+/* Quiz options - full width stacked buttons */
 #options button {
   display: block;
   width: 100%;
   margin: 8px 0;
   background: #dcdcdc;
-  color:black;
+  color: #111;
+  text-align: left;
+  padding: 12px;
+  border-radius: 8px;
 }
 
+/* option hover */
 #options button:hover {
-  background: #8f4da1;
+  background: #caa7e0;
 }
 
 /* Correct / Wrong glow */
@@ -74,4 +83,3 @@ button:hover {
   from { box-shadow: 0 0 5px #f44336; }
   to { box-shadow: 0 0 20px #f44336; }
 }
-
