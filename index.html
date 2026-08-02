@@ -1,33 +1,33 @@
 <!doctype html>
-<html>
-    <head>
-        <meta charset= 8>
-        <title>
-            QUIZ PROGRAM
-        </title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <div id="app">
-            <h1>QUIZ</h1>
-           <div id="category-select"></div>
-            <h2>select categories:</h2>
-            <button onclick="startquiz('Politics')">Politics</button>
-            <button onclick="startquiz('Games')">Games</button>
-            <button onclick="startquiz('sports')">Sports</button>
-            <button onclick="startquiz('Science')">Science</button>
-            <button onclick="startquiz('General Knowledge')">General Knowledge</button>
-            <button onclick="startquiz('history & Geography')">History & Geography</button>
-            <button onclick="startquiz('Math and Logic')">Math and Logic</button>
-        </div>
-        <div id="quiz-container" style="display:none;">
-            <button id="back-btn" type="button" style="display:none;" area lable="back to category section">BACK</button>
-            <div id="question"></div>
-            <div id="options"></div>
-            <button id="next-btn">NEXT</button>
-            <div id="results"></div>
-            </div>
-        </div>
-        <script src="script.js"></script>
-    </body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>QUIZ PROGRAM</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="app">
+      <h1>QUIZ</h1>
+      <div id="category-select"></div>
+      <h2>Select categories:</h2>
+      <button onclick="startquiz('Politics')">Politics</button>
+      <button onclick="startquiz('Games')">Games</button>
+      <button onclick="startquiz('Sports')">Sports</button>
+      <button onclick="startquiz('Science')">Science</button>
+      <button onclick="startquiz('General Knowledge')">General Knowledge</button>
+      <button onclick="startquiz('History & Geography')">History & Geography</button>
+      <button onclick="startquiz('Math and Logic')">Math and Logic</button>
+    </div>
+
+    <div id="quiz-container" style="display:none;">
+      <button id="back-btn" type="button" style="display:none;" aria-label="back to category section">BACK</button>
+      <div id="question"></div>
+      <div id="options"></div>
+      <button id="next-btn">NEXT</button>
+      <div id="results"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
 </html>
