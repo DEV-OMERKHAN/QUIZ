@@ -1,156 +1,35 @@
-/* Reset & viewport setup */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background: linear-gradient(135deg, #6a11cb, #806bac);
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px 15px;
-}
-
-/* Glassmorphism Card Container */
-.card {
-  width: 100%;
-  max-width: 500px;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 28px 20px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  text-align: center;
-}
-
-/* Titles */
-.card h1 {
-  font-size: 2.2rem;
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
-
-.card h2 {
-  font-size: 1.1rem;
-  font-weight: 400;
-  opacity: 0.9;
-  margin-bottom: 24px;
-}
-
-/* Responsive Grid for Category Buttons */
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
-  width: 100%;
-}
-
-/* Base Category & Navigation Buttons */
-.category-grid button,
-#next-btn,
-#back-btn {
-  width: 100%;
-  padding: 14px 16px;
-  border: none;
-  border-radius: 12px;
-  background: #2b2b36;
-  color: #ffffff;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-.category-grid button:hover,
-#next-btn:hover,
-#back-btn:hover {
-  background: #3d3d4d;
-  transform: translateY(-2px);
-}
-
-.category-grid button:active,
-#next-btn:active,
-#back-btn:active {
-  transform: translateY(0);
-}
-
-/* Question Styling */
-#question {
-  font-size: 1.2rem;
-  font-weight: 600;
-  line-height: 1.4;
-  margin-bottom: 20px;
-}
-
-/* Quiz Option Buttons (Stacked vertically) */
+/* Quiz options container */
 #options {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important; /* Forces clean 12px spacing between buttons */
+  margin: 20px 0 !important;
+  width: 100% !important;
 }
 
+/* Quiz option buttons */
 #options button {
-  width: 100%;
-  padding: 14px 18px;
-  border: none;
-  border-radius: 12px;
-  background: #ffffff;
-  color: #1a1a1a;
-  font-size: 1rem;
-  font-weight: 500;
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: block !important;
+  width: 100% !important;
+  margin: 0 !important; /* REMOVE margins so gap handles spacing cleanly */
+  padding: 14px 18px !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  text-align: left !important;
+  border: none !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+  box-sizing: border-box !important;
+  transition: transform 0.15s ease, background-color 0.2s ease !important;
 }
 
+/* Hover and active states for touch devices */
 #options button:hover {
-  background: #f0e6ff;
-  transform: translateX(4px);
+  background: #f0e6ff !important;
 }
 
-/* Next / Back Control Buttons */
-#next-btn, #back-btn {
-  background: #ffd966;
-  color: #1a1a1a;
-  margin-top: 10px;
-}
-
-#next-btn:hover, #back-btn:hover {
-  background: #ffe38f;
-}
-
-/* Correct / Wrong Feedback Colors */
-.correct {
-  background-color: #2e7d32 !important;
-  color: #ffffff !important;
-}
-
-.wrong {
-  background-color: #d32f2f !important;
-  color: #ffffff !important;
-}
-
-/* Score display */
-#results {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-top: 15px;
-}
-
-/* Small screen tweaks */
-@media (max-width: 400px) {
-  .category-grid {
-    grid-template-columns: 1fr; /* Full width buttons on very narrow screens */
-  }
+#options button:active {
+  transform: scale(0.98) !important;
 }
