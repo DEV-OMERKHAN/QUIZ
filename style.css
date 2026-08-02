@@ -1,0 +1,76 @@
+/* Full screen colorful background */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #6a11cb, #806bac);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Centered app container */
+#app {
+  text-align: center;
+  width: 90%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+/* Buttons */
+button {
+  margin: 10px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  background: #d4d3d2;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
+  background: #ffc6a8;
+}
+
+/* Quiz options */
+#options button {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  background: #dcdcdc;
+  color:black;
+}
+
+#options button:hover {
+  background: #8f4da1;
+}
+
+/* Correct / Wrong glow */
+.correct {
+  background-color: #4CAF50 !important;
+  color: white;
+  animation: glowGreen 0.5s ease;
+}
+
+.wrong {
+  background-color: #f44336 !important;
+  color: white;
+  animation: glowRed 0.5s ease;
+}
+
+@keyframes glowGreen {
+  from { box-shadow: 0 0 5px #4CAF50; }
+  to { box-shadow: 0 0 20px #4CAF50; }
+}
+
+@keyframes glowRed {
+  from { box-shadow: 0 0 5px #f44336; }
+  to { box-shadow: 0 0 20px #f44336; }
+}
