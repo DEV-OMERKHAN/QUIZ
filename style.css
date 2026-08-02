@@ -7,70 +7,87 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
-/* Centered app container */
-#app {
+/* Centered card containers for both Menu & Quiz */
+.card {
   text-align: center;
   width: 90%;
   max-width: 600px;
-  background: rgba(50, 184, 221, 0.08);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
   padding: 30px;
   border-radius: 15px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
 }
 
-/* Buttons: improved contrast */
+/* Base button styles */
 button {
-  margin: 10px;
-  padding: 12px 25px;
+  margin: 8px;
+  padding: 12px 20px;
   border: none;
   border-radius: 8px;
-  background: #333; /* darker for contrast */
+  background: #2b2b36;
   color: #fff;
   font-size: 16px;
   cursor: pointer;
   transition: transform 0.12s, background 0.2s;
 }
 
-/* Hover & focus */
 button:hover {
   transform: scale(1.03);
-  background: #444;
+  background: #3d3d4d;
 }
+
 button:focus {
-  outline: 3px solid #ffd966; /* visible focus for keyboard users */
+  outline: 3px solid #ffd966;
   outline-offset: 2px;
+}
+
+/* Question text styling */
+#question {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
 
 /* Quiz options - full width stacked buttons */
 #options button {
   display: block;
   width: 100%;
-  margin: 8px 0;
-  background: #dcdcdc;
+  margin: 10px 0;
+  background: #e0e0e0;
   color: #111;
+  font-weight: 500;
   text-align: left;
-  padding: 12px;
+  padding: 14px;
   border-radius: 8px;
+  box-sizing: border-box;
 }
 
-/* option hover */
 #options button:hover {
   background: #caa7e0;
 }
 
-/* Correct / Wrong glow */
+/* Results text */
+#results {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+/* Correct / Wrong glows */
 .correct {
   background-color: #4CAF50 !important;
-  color: white;
+  color: white !important;
   animation: glowGreen 0.5s ease;
 }
 
 .wrong {
   background-color: #f44336 !important;
-  color: white;
+  color: white !important;
   animation: glowRed 0.5s ease;
 }
 
