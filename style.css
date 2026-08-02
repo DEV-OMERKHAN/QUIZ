@@ -15,7 +15,7 @@ body {
   text-align: center;
   width: 90%;
   max-width: 600px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(50, 184, 221, 0.1);
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
@@ -74,3 +74,4 @@ button:hover {
   from { box-shadow: 0 0 5px #f44336; }
   to { box-shadow: 0 0 20px #f44336; }
 }
+
