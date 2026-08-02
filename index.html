@@ -7,20 +7,23 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div id="app">
+    <!-- Category Selection View -->
+    <div id="category-select" class="card">
       <h1>QUIZ</h1>
-      <div id="category-select"></div>
       <h2>Select categories:</h2>
-      <button onclick="startquiz('Politics')">Politics</button>
-      <button onclick="startquiz('Games')">Games</button>
-      <button onclick="startquiz('Sports')">Sports</button>
-      <button onclick="startquiz('Science')">Science</button>
-      <button onclick="startquiz('General Knowledge')">General Knowledge</button>
-      <button onclick="startquiz('History & Geography')">History & Geography</button>
-      <button onclick="startquiz('Math and Logic')">Math and Logic</button>
+      <div class="category-grid">
+        <button onclick="startquiz('Politics')">Politics</button>
+        <button onclick="startquiz('Games')">Games</button>
+        <button onclick="startquiz('Sports')">Sports</button>
+        <button onclick="startquiz('Science')">Science</button>
+        <button onclick="startquiz('General Knowledge')">General Knowledge</button>
+        <button onclick="startquiz('History & Geography')">History & Geography</button>
+        <button onclick="startquiz('Math and Logic')">Math and Logic</button>
+      </div>
     </div>
 
-    <div id="quiz-container" style="display:none;">
+    <!-- Quiz View -->
+    <div id="quiz-container" class="card" style="display:none;">
       <button id="back-btn" type="button" style="display:none;" aria-label="back to category section">BACK</button>
       <div id="question"></div>
       <div id="options"></div>
