@@ -1,166 +1,33 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Quiz with Back Button</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 20px; }
-    #quiz-container { display: none; margin-top: 12px; }
-    #back-btn { display: none; margin-bottom: 12px; padding: 8px 12px; cursor: pointer; }
-    #options button { display: block; margin: 6px 0; padding: 8px 10px; }
-    .correct { background: #d4f8d4; border: 1px solid #34a853; }
-    .wrong { background: #ffd6d6; border: 1px solid #d93025; }
-  </style>
-</head>
-<body>
-  <main id="quiz-app" role="main">
-    <h1>🎯 Interactive Quiz</h1>
-
-    <section id="level-select" aria-label="Choose difficulty">
-      <p>Select Difficulty:</p>
-      <button data-level="easy">Easy</button>
-      <button data-level="medium">Medium</button>
-      <button data-level="hard">Hard</button>
-      <button data-level="extreme">Extreme</button>
-    </section>
-
-    <section id="quiz-container" aria-live="polite">
-      <!-- Back button (hidden until quiz completes) -->
-      <button id="back-btn" type="button" aria-label="Back to difficulty selection">⬅️ Back</button>
-
-      <div id="question" style="font-weight:600; margin-bottom:8px;"></div>
-      <div id="options" role="group" aria-label="Answer choices"></div>
-      <button id="next-btn" type="button" style="display:none; margin-top:10px;">Next ➡️</button>
-      <div id="result" style="margin-top:12px; font-weight:600;"></div>
-    </section>
-  </main>
-
-  <script>
-    // Simple question banks
-    const banks = {
-      easy: [
-        { question: "2 + 2 = ?", options: ["3", "4", "5"], answer: 1 },
-        { question: "Capital of India?", options: ["Delhi", "Mumbai", "Kolkata"], answer: 0 },
-        { question: "Which is a fruit?", options: ["Carrot", "Apple", "Potato"], answer: 1 }
-      ],
-      medium: [
-        { question: "Which tag is used for JavaScript?", options: ["<script>", "<js>", "<javascript>"], answer: 0 },
-        { question: "CSS stands for?", options: ["Cascading Style Sheets", "Creative Style System", "Computer Styled Sheets"], answer: 0 }
-      ],
-      hard: [
-        { question: "What does malloc() do in C?", options: ["Allocates memory", "Frees memory", "Initializes variable"], answer: 0 },
-        { question: "Which year was JavaScript created?", options: ["1995", "2000", "1992"], answer: 0 }
-      ],
-      extreme: [
-        { question: "Who created Git?", options: ["Linus Torvalds", "Bill Gates", "Mark Zuckerberg"], answer: 0 },
-        { question: "Which algorithm is used in RSA?", options: ["Prime factorization", "Sorting", "Hashing"], answer: 0 }
-      ]
-    };
-
-    // DOM refs
-    const levelSelect = document.getElementById('level-select');
-    const quizContainer = document.getElementById('quiz-container');
-    const questionEl = document.getElementById('question');
-    const optionsEl = document.getElementById('options');
-    const nextBtn = document.getElementById('next-btn');
-    const resultEl = document.getElementById('result');
-    const backBtn = document.getElementById('back-btn');
-
-    // State
-    let qs = [];
-    let idx = 0;
-    let score = 0;
-
-    // Utility
-    function shuffle(arr){ return arr.slice().sort(()=>Math.random()-0.5); }
-
-    // Start quiz when a difficulty button is clicked
-    levelSelect.addEventListener('click', (e) => {
-      const level = e.target.dataset && e.target.dataset.level;
-      if (!level) return;
-      startQuiz(level);
-    });
-
-    function startQuiz(level) {
-      // pick questions (copy & shuffle)
-      const bank = banks[level] || [];
-      qs = shuffle(bank).slice(0, Math.min(bank.length, 3)); // limit to 3 for demo
-      idx = 0;
-      score = 0;
-
-      // UI
-      levelSelect.style.display = 'none';
-      quizContainer.style.display = 'block';
-      questionEl.style.display = '';
-      optionsEl.style.display = '';
-      nextBtn.style.display = 'none';
-      resultEl.textContent = '';
-      backBtn.style.display = 'none'; // ensure back is hidden at start
-      showQuestion();
-    }
-
-    function showQuestion() {
-      const q = qs[idx];
-      questionEl.textContent = q.question;
-      optionsEl.innerHTML = '';
-      q.options.forEach((opt, i) => {
-        const b = document.createElement('button');
-        b.type = 'button';
-        b.textContent = opt;
-        b.addEventListener('click', () => selectAnswer(b, i));
-        optionsEl.appendChild(b);
-      });
-      nextBtn.style.display = 'none';
-    }
-
-    function selectAnswer(button, selectedIndex) {
-      const correct = qs[idx].answer;
-      if (selectedIndex === correct) {
-        button.classList.add('correct');
-        score++;
-      } else {
-        button.classList.add('wrong');
-        // highlight correct button
-        optionsEl.children[correct].classList.add('correct');
-      }
-      // disable all options
-      Array.from(optionsEl.children).forEach(b => b.disabled = true);
-      nextBtn.style.display = 'inline-block';
-    }
-
-    nextBtn.addEventListener('click', () => {
-      idx++;
-      if (idx < qs.length) {
-        showQuestion();
-      } else {
-        endQuiz();
-      }
-    });
-
-    function endQuiz() {
-      // hide Q&A and Next
-      questionEl.style.display = 'none';
-      optionsEl.style.display = 'none';
-      nextBtn.style.display = 'none';
-
-      // show result
-      resultEl.textContent = `Quiz Over! You scored ${score} out of ${qs.length}.`;
-
-      // show back button so user can return to difficulty selection
-      backBtn.style.display = 'inline-block';
-    }
-
-    backBtn.addEventListener('click', () => {
-      // Reset UI & state
-      quizContainer.style.display = 'none';
-      levelSelect.style.display = 'block';
-      questionEl.textContent = '';
-      optionsEl.innerHTML = '';
-      resultEl.textContent = '';
-      backBtn.style.display = 'none';
-      qs = []; idx = 0; score = 0;
-    });
-  </script>
-</body>
+<html>
+    <head>
+        <meta charset= 8>
+        <title>
+            QUIZ PROGRAM
+        </title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="app">
+            <h1>QUIZ</h1>
+           <div id="category-select"></div>
+            <h2>select categories:</h2>
+            <button onclick="startquiz('Politics')">Politics</button>
+            <button onclick="startquiz('Games')">Games</button>
+            <button onclick="startquiz('sports')">Sports</button>
+            <button onclick="startquiz('Science')">Science</button>
+            <button onclick="startquiz('General Knowledge')">General Knowledge</button>
+            <button onclick="startquiz('history & Geography')">History & Geography</button>
+            <button onclick="startquiz('Math and Logic')">Math and Logic</button>
+        </div>
+        <div id="quiz-container" style="display:none;">
+            <button id="back-btn" type="button" style="display:none;" area lable="back to category section">BACK</button>
+            <div id="question"></div>
+            <div id="options"></div>
+            <button id="next-btn">NEXT</button>
+            <div id="results"></div>
+            </div>
+        </div>
+        <script src="quiz.js"></script>
+    </body>
 </html>
