@@ -166,11 +166,12 @@ const mathLogicQuestions = [
   { question: "Which number is the smallest prime?", options: ["1", "2", "3"], answer: 1 }
 ];
 
-// globals
+// Globals
 let currentQuestions = [];
 let currentIndex = 0;
 let score = 0;
 
+// DOM Elements
 const questionEl = document.getElementById("question");
 const optionsEl = document.getElementById("options");
 const nextBtn = document.getElementById("next-btn");
@@ -179,76 +180,78 @@ const quizContainer = document.getElementById("quiz-container");
 const levelSelect = document.getElementById("category-select");
 const backBtn = document.getElementById("back-btn");
 
-// Shuffle helper
+// Non-mutating shuffle helper
 function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
+  return [...array].sort(() => Math.random() - 0.5);
 }
 
-// Start quiz (name matches HTML onclick: startquiz(...))
+// Start quiz
 function startquiz(category) {
   if (!category) return;
-  const key = category.toLowerCase().replace(/[^a-z0-9]/g, ""); // normalize: remove spaces & punctuation
+  const key = category.toLowerCase().replace(/[^a-z0-9]/g, ""); 
 
+  let sourceQuestions = [];
   switch (key) {
     case "politics":
-      currentQuestions = shuffle(politicsQuestions).slice(0, 20);
+      sourceQuestions = politicsQuestions;
       break;
     case "games":
-      currentQuestions = shuffle(gamesQuestions).slice(0, 20);
+      sourceQuestions = gamesQuestions;
       break;
     case "sports":
-      currentQuestions = shuffle(sportsQuestions).slice(0, 20);
+      sourceQuestions = sportsQuestions;
       break;
     case "science":
-      currentQuestions = shuffle(scienceQuestions).slice(0, 20);
+      sourceQuestions = scienceQuestions;
       break;
     case "generalknowledge":
-      currentQuestions = shuffle(generalKnowledgeQuestions).slice(0, 20);
+      sourceQuestions = generalKnowledgeQuestions;
       break;
     case "historygeography":
     case "historyandgeography":
-      currentQuestions = shuffle(historyGeographyQuestions).slice(0, 20);
+      sourceQuestions = historyGeographyQuestions;
       break;
-    case "mathandlogic":
     case "mathandlogic":
     case "mathlogic":
-      currentQuestions = shuffle(mathLogicQuestions).slice(0, 20);
+      sourceQuestions = mathLogicQuestions;
       break;
     default:
-      // If unknown category, do nothing
       return;
   }
 
+  currentQuestions = shuffle(sourceQuestions).slice(0, 20);
   currentIndex = 0;
   score = 0;
+
   if (levelSelect) levelSelect.style.display = "none";
   if (quizContainer) quizContainer.style.display = "block";
 
-  // ensure question/options are visible (they might have been hidden at end)
-  if (questionEl) questionEl.style.display = "";
-  if (optionsEl) optionsEl.style.display = "";
+  if (questionEl) questionEl.style.display = "block";
+  if (optionsEl) optionsEl.style.display = "block";
   if (nextBtn) nextBtn.style.display = "none";
-
   if (resultEl) resultEl.textContent = "";
-  if (backBtn) backBtn.style.display = "none"; // hide back button at start
+  if (backBtn) backBtn.style.display = "none";
+
   showQuestion();
 }
 
-// Show question
+// Show current question
 function showQuestion() {
   const q = currentQuestions[currentIndex];
   if (!q) return;
+
   questionEl.textContent = q.question;
   optionsEl.innerHTML = "";
+
   q.options.forEach((opt, i) => {
     const btn = document.createElement("button");
     btn.textContent = opt;
     btn.type = "button";
     btn.className = "option-btn";
     btn.onclick = () => checkAnswer(btn, i);
-    btn.setAttribute("aria-pressed", "false");
     optionsEl.appendChild(btn);
   });
+
   nextBtn.style.display = "none";
 }
 
@@ -260,55 +263,59 @@ function checkAnswer(button, i) {
     score++;
   } else {
     button.classList.add("wrong");
-    // highlight correct option if present
     if (optionsEl.children[correctIndex]) {
       optionsEl.children[correctIndex].classList.add("correct");
     }
   }
+
   Array.from(optionsEl.children).forEach(b => {
     b.disabled = true;
-    b.setAttribute("aria-pressed", "true");
   });
+
   nextBtn.style.display = "inline-block";
 }
 
-// Next question
-nextBtn.onclick = () => {
-  currentIndex++;
-  if (currentIndex < currentQuestions.length) {
-    showQuestion();
-  } else {
-    if (resultEl) resultEl.textContent = `Quiz Over! You scored ${score} out of ${currentQuestions.length}.`;
-    // hide Q&A and next button
-    if (questionEl) questionEl.style.display = "none";
-    if (optionsEl) optionsEl.style.display = "none";
-    if (nextBtn) nextBtn.style.display = "none";
+// Next question button handler
+if (nextBtn) {
+  nextBtn.onclick = () => {
+    currentIndex++;
+    if (currentIndex < currentQuestions.length) {
+      showQuestion();
+    } else {
+      if (resultEl) resultEl.textContent = `Quiz Over! You scored ${score} out of ${currentQuestions.length}.`;
+      if (questionEl) questionEl.style.display = "none";
+      if (optionsEl) optionsEl.style.display = "none";
+      if (nextBtn) nextBtn.style.display = "none";
+      if (backBtn) backBtn.style.display = "inline-block";
+    }
+  };
+}
 
-    // show Back button so user can return to category selection
-    if (backBtn) backBtn.style.display = "inline-block";
-  }
-};
-
-// Back button handler: reset and show category selection
+// Back button handler
 if (backBtn) {
   backBtn.addEventListener('click', () => {
-    // hide quiz container and show category select
     if (quizContainer) quizContainer.style.display = "none";
     if (levelSelect) levelSelect.style.display = "block";
 
-    // clear/reset quiz UI
     if (questionEl) questionEl.textContent = '';
     if (optionsEl) optionsEl.innerHTML = '';
     if (resultEl) resultEl.textContent = '';
 
-    // reset quiz state variables
     currentIndex = 0;
     score = 0;
     currentQuestions = [];
 
-    // hide back button for next run
     backBtn.style.display = "none";
-    // ensure next button is visible for next quiz run (startquiz will hide it anyway)
-    if (nextBtn) nextBtn.style.display = "inline-block";
   });
 }
+
+// Auto-bind click events to category buttons if present in HTML
+document.addEventListener("DOMContentLoaded", () => {
+  const categoryButtons = document.querySelectorAll("#category-select button, .category-btn");
+  categoryButtons.forEach(button => {
+    button.addEventListener("click", (e) => {
+      const categoryName = e.target.getAttribute("data-category") || e.target.textContent;
+      startquiz(categoryName);
+    });
+  });
+});
